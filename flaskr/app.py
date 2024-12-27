@@ -7,7 +7,10 @@ from user import user
 from ledger import ledger
 from wallet import wallet
 from goal import goal
+from flask import Flask, render_template
+
 app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'
 
 def initialize_app():
     # Initialize the app with the current amount of each goal
@@ -52,7 +55,7 @@ app.register_blueprint(goal, url_prefix="/goal")
 
 @app.route('/')
 def home():
-    return "Hello, World!"
+    return render_template('index.html')  # Serve the main page
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0', port = 5000, debug=True)

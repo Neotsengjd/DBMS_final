@@ -1,13 +1,13 @@
 USE DBMS;
 -- Insert Users
-INSERT INTO Users (UName, UPassword, UAccount, NoticeTime)
-VALUES ('Mason', 'password', 'mason_account', 20021227);
-INSERT INTO Users (UName, UPassword, UAccount, NoticeTime)
-VALUES ('Jeffery', 'password', 'jeffery_account', 20011108);
-INSERT INTO Users (UName, UPassword, UAccount, NoticeTime)
-VALUES ('Eden', 'password', 'Eden_account', 20021027);
-INSERT INTO Users (UName, UPassword, UAccount, NoticeTime)
-VALUES ('David', 'password', 'David_account', 20030712);
+INSERT INTO Users (UName, UPassword, UAccount)
+VALUES ('Mason', 'password', 'mason_account');
+INSERT INTO Users (UName, UPassword, UAccount)
+VALUES ('Jeffery', 'password', 'jeffery_account');
+INSERT INTO Users (UName, UPassword, UAccount)
+VALUES ('Eden', 'password', 'Eden_account');
+INSERT INTO Users (UName, UPassword, UAccount)
+VALUES ('David', 'password', 'David_account');
 
 -- Insert ledgers
 INSERT INTO Ledgers (UID, LName)
