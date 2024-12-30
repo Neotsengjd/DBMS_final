@@ -4,8 +4,6 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, abort
 from data import data
 from user import user
-from ledger import ledger
-from wallet import wallet
 from goal import goal
 from flask import Flask, render_template
 
@@ -47,9 +45,7 @@ app.config["MYSQL_DB"] = os.getenv("MYSQL_DB")
 db.init_app(app)
 initialize_app() # Initialize the app with the current amount of each goal
 app.register_blueprint(user, url_prefix="/user")
-app.register_blueprint(ledger, url_prefix="/ledger")
 app.register_blueprint(data, url_prefix="/data")
-app.register_blueprint(wallet, url_prefix="/wallet")
 app.register_blueprint(goal, url_prefix="/goal")
 
 

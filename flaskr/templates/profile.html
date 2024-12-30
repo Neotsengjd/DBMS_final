@@ -47,12 +47,33 @@
         a:hover {
             background-color: #0056b3;
         }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* Spacing between the buttons */
+            margin-top: 20px;
+        }
+        .buttons-container a {
+            margin-bottom: 10px;
+            width: 60%;
+            text-align: center;
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="profile-card">
         <h1>User Profile</h1>
         <p><strong>User ID:</strong> {{ user_id }}</p>
+        
+        <div class="buttons-container">
+            <a href="{{ url_for('meal_page') }}">Meal</a>
+            <a href="{{ url_for('goal_page') }}">Goal</a>
+            <a href="{{ url_for('group_page') }}">Group</a>
+            <a href="{{ url_for('user_info_page') }}">User Information</a>
+        </div>
+        
         <a href="{{ url_for('user.login') }}">Back to Login</a>
     </div>
 </body>
