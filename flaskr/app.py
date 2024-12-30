@@ -16,19 +16,7 @@ def initialize_app():
         try:
             print(db.connection.cursor())
             cursor = db.connection.cursor()
-            cursor.execute(
-                f"""
-                    UPDATE Goals
-                    SET GCurrentAmount = (
-                        SELECT COALESCE(SUM(Price), 0)
-                        FROM Datas, DataToGoal
-                        WHERE Datas.DID = DataToGoal.DID
-                        AND DataToGoal.GID = Goals.GID
-                    )
-                """
-            )
-            cursor.execute('COMMIT')
-    
+           
         except:
             cursor.execute("ROLLBACK")
             cursor.close()
@@ -64,10 +52,6 @@ def goal_page():
 @app.route('/group')
 def group_page():
     return render_template('group.html')
-
-@app.route('/user_info')
-def user_info_page():
-    return render_template('user_info.html')
 
 if __name__ == "__main__":
     app.run(host = '0.0.0.0', port = 5000, debug=True)

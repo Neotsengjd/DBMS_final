@@ -71,7 +71,7 @@
             <a href="{{ url_for('meal_page') }}">Meal</a>
             <a href="{{ url_for('goal_page') }}">Goal</a>
             <a href="{{ url_for('group_page') }}">Group</a>
-            <a href="{{ url_for('user_info_page') }}">User Information</a>
+            <a href="{{ url_for('user.user_info', user_id=user_id) }}">User Information</a>
         </div>
         
         <a href="{{ url_for('user.login') }}">Back to Login</a>

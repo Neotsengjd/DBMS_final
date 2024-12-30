@@ -15,8 +15,8 @@ def register():
             # Check if the account already exists
             cursor.execute(f"""
                 SELECT COUNT(*)
-                FROM Users
-                WHERE UAccount = '{user_acc}';
+                FROM USERS
+                WHERE Account = '{user_acc}';
             """)
             result = cursor.fetchone()
             if result[0] > 0:  # If the account already exists
@@ -25,7 +25,7 @@ def register():
 
             # Insert the new user into the database
             cursor.execute(f"""
-                INSERT INTO Users (UName, UAccount, UPassword)
+                INSERT INTO USERS (UName, Account, Password)
                 VALUES ('{user_name}', '{user_acc}', '{user_password}');
             """)
             db.connection.commit()
@@ -48,9 +48,9 @@ def login():
         try:
             # Query to check if the account and password match
             cursor.execute(f"""
-                SELECT UID
-                FROM Users
-                WHERE UAccount = '{user_acc}' AND UPassword = '{user_password}';
+                SELECT ID
+                FROM USERS
+                WHERE Account = '{user_acc}' AND Password = '{user_password}';
             """)
             result = cursor.fetchone()  # Fetch one result
             cursor.close()
@@ -70,5 +70,25 @@ def login():
 
 @user.route('/profile/<int:user_id>', methods=['GET'])
 def profile(user_id):
-    # Fetch user data from database
-    return render_template('profile.html', user_id=user_id)
+    cursor = db.connection.cursor()
+    try:
+        # Fetch user data from the database
+        cursor.execute(f"""
+            SELECT UName, Gender, Age, Height, Weight
+            FROM USERS
+            WHERE ID = '{user_id}';
+        """)
+        user_data = cursor.fetchone()  # Fetch one result
+        cursor.close()
+        if not user_data:
+            abort(404, "User not found.")
+        return render_template('profile.html', user_data=user_data, user_id=user_id)
+    except Exception as e:
+        print(e)
+        abort(500, "An error occurred while fetching user data.")
+
+
+@user.route('/user_info/<int:user_id>', methods=['GET'])
+def user_info(user_id):
+    return render_template('user_info.html', user_id=user_id)
+
