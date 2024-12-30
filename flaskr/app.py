@@ -53,6 +53,22 @@ app.register_blueprint(goal, url_prefix="/goal")
 def home():
     return render_template('index.html')  # Serve the main page
 
+@app.route('/meal')
+def meal_page():
+    return render_template('meal.html')
+
+@app.route('/goal')
+def goal_page():
+    return render_template('goal.html')
+
+@app.route('/group')
+def group_page():
+    return render_template('group.html')
+
+@app.route('/user_info')
+def user_info_page():
+    return render_template('user_info.html')
+
 if __name__ == "__main__":
     app.run(host = '0.0.0.0', port = 5000, debug=True)
     
