@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, abort
 from user import user
 from goal import goal
-#from meal import meal
-#from food import food
+from meal import meal
 from group import group
 from flask import Flask, render_template
 
@@ -35,8 +34,7 @@ app.config["MYSQL_DB"] = os.getenv("MYSQL_DB")
 db.init_app(app)
 initialize_app() # Initialize the app with the current amount of each goal
 app.register_blueprint(user, url_prefix="/user")
-#app.register_blueprint(meal, url_prefix="/meal")
-#app.register_blueprint(food, url_prefix="/food")
+app.register_blueprint(meal, url_prefix="/meal")
 app.register_blueprint(goal, url_prefix="/goal")
 app.register_blueprint(group, url_prefix="/group")
 
@@ -45,18 +43,5 @@ app.register_blueprint(group, url_prefix="/group")
 def home():
     return render_template('index.html')  # Serve the main page
 
-@app.route('/meal')
-def meal_page():
-    return render_template('meal.html')
-
-@app.route('/goal')
-def goal_page():
-    return render_template('goal.html')
-
-@app.route('/group')
-def group_page():
-    return render_template('group.html')
-
 if __name__ == "__main__":
     app.run(host = '0.0.0.0', port = 5000, debug=True)
-    

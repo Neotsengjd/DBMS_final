@@ -68,7 +68,7 @@
         <p><strong>User ID:</strong> {{ user_id }}</p>
         
         <div class="buttons-container">
-            <a href="{{ url_for('meal_page') }}">Meal</a>
+            <a href="{{ url_for('meal.query', user_id=user_id) }}">Meal</a>
             <a href="{{ url_for('goal.goal_home', user_id=user_id) }}">Goal</a>
             <a href="{{ url_for('group.group_home', user_id=user_id) }}">Group</a>
             <a href="{{ url_for('user.user_info', user_id=user_id) }}">User Information</a>

@@ -209,17 +209,6 @@
 </head>
 <body>
     <h1>Group Management</h1>
-    
-    <!-- 显示操作成功或失败的消息（若有使用 flash() ） -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-          {% for category, msg in messages %}
-            <li class="flash-{{ category }}">{{ msg }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
 
     <!-- 新增：每行两列排列的各个部分容器 -->
     <div class="sections-container">

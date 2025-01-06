@@ -235,17 +235,6 @@
 <body>
     <h1>Goal Management</h1>
 
-    <!-- Flash messages: 成功 / 失敗 / 警告 等提示 -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul>
-          {% for category, msg in messages %}
-            <li class="flash-{{ category }}">{{ msg }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
     <!-- 每行两列排列的各个部分容器 -->
     <div class="sections-container">
         <!-- 1) Create Goal -->
