@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goal Management</title>
+    <style>
+        /* 重置一些默认样式 */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 40px; /* 增加标题与下方内容的间距 */
+            text-align: center;
+        }
+
+        /* 消息提示样式 */
+        ul {
+            list-style-type: none;
+            margin-bottom: 20px;
+            padding: 0;
+            width: 100%;
+            max-width: 800px; /* 增加最大宽度以适应更宽的背景框 */
+        }
+
+        ul li {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        /* 不同类别的消息颜色 */
+        .flash-success {
+            background-color: #28a745;
+        }
+
+        .flash-danger {
+            background-color: #dc3545;
+        }
+
+        .flash-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .flash-info {
+            background-color: #17a2b8;
+        }
+
+        /* 容器用于垂直排列各个部分 */
+        .sections-container {
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            width: 100%;
+            max-width: 800px; /* 增加容器的最大宽度 */
+            gap: 20px; /* 各部分之间的间距 */
+            margin-bottom: 30px;
+            margin-top: 20px; /* 增加容器与标题之间的上边距 */
+        }
+
+        /* 每个部分的容器 */
+        .section {
+            background-color: #fff;
+            padding: 30px; /* 增加内边距使背景框更宽大 */
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 增强阴影效果 */
+            width: 100%; /* 使每个部分占满容器宽度 */
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        /* 更新 h2 样式，使其左对齐并使用黑色 */
+        .section h2 {
+            color: #000; /* 黑色 */
+            text-align: left; /* 左对齐 */
+            margin-bottom: 20px; /* 增加标题与表单之间的间距 */
+            font-size: 1.5em; /* 增加标题字体大小 */
+        }
+
+        /* 表单样式 */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        form input[type="text"],
+        form input[type="date"],
+        form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em; /* 增加输入框字体大小 */
+        }
+
+        form button {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 1em; /* 增加按钮字体大小 */
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* 增加表格与表单之间的间距 */
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        table th, table td {
+            padding: 14px 20px; /* 增加单元格内边距 */
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.95em; /* 微调字体大小 */
+        }
+
+        table th {
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* 分隔线 */
+        hr {
+            width: 100%;
+            max-width: 800px; /* 与容器一致 */
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 30px 0;
+        }
+
+        /* 返回链接样式 */
+        .back-link {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            font-size: 1em; /* 增加字体大小 */
+        }
+
+        .back-link a:hover {
+            color: #0056b3;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .sections-container {
+                max-width: 100%;
+            }
+
+            .section {
+                padding: 25px; /* 适当减少内边距以适应较小屏幕 */
+            }
+
+            table th, table td {
+                padding: 10px 12px; /* 减少单元格内边距 */
+                font-size: 0.9em; /* 微调字体大小 */
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            ul {
+                max-width: 100%;
+            }
+
+            .back-link {
+                text-align: center;
+                max-width: 100%;
+            }
+
+            form input[type="text"],
+            form input[type="date"],
+            form select {
+                padding: 10px; /* 减少输入框内边距 */
+            }
+
+            form button {
+                padding: 10px 16px; /* 减少按钮内边距 */
+            }
+
+            .section h2 {
+                font-size: 1.3em; /* 微调标题字体大小 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Goal Management</h1>
+
+    <!-- Flash messages: 成功 / 失敗 / 警告 等提示 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, msg in messages %}
+            <li class="flash-{{ category }}">{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- 每行两列排列的各个部分容器 -->
+    <div class="sections-container">
+        <!-- 1) Create Goal -->
+        <div class="section">
+            <h2>Create Goal</h2>
+            <form method="POST" action="{{ url_for('goal.goal_home', user_id=user_id) }}">
+                <input type="hidden" name="action" value="create_goal">
+
+                <label for="fat">Fat (g):</label>
+                <input type="text" name="fat" id="fat" aria-label="Fat in grams" required>
+
+                <label for="protein">Protein (g):</label>
+                <input type="text" name="protein" id="protein" aria-label="Protein in grams" required>
+
+                <label for="starch">Starch (g):</label>
+                <input type="text" name="starch" id="starch" aria-label="Starch in grams" required>
+
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" aria-label="Start Date" required>
+
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date" id="end_date" aria-label="End Date" required>
+
+                <button type="submit" class="create-btn">Input</button>
+            </form>
+        </div>
+
+        <!-- 2) My Goal -->
+        <div class="section">
+            <h2>My Goal</h2>
+            <form method="POST" action="{{ url_for('goal.goal_home', user_id=user_id) }}">
+                <input type="hidden" name="action" value="my_goal">
+                <button type="submit" class="view-btn">View</button>
+            </form>
+
+            <!-- 如果後端查到 my_goals_data，就用表格顯示 -->
+            {% if my_goals_data %}
+                <table>
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Goal Fat (g)</th>
+                        <th>Goal Protein (g)</th>
+                        <th>Goal Starch (g)</th>
+                        <th>Actual Fat (g)</th>
+                        <th>Actual Protein (g)</th>
+                        <th>Actual Starch (g)</th>
+                        <th>Expected Calories</th>
+                        <th>Actual Calories</th>
+                    </tr>
+                    {% for row in my_goals_data %}
+                    <tr>
+                        <td>{{ row[1] }}</td> <!-- StartDate -->
+                        <td>{{ row[2] }}</td> <!-- EndDate -->
+                        <td>{{ row[3] }}</td> <!-- GoalFat -->
+                        <td>{{ row[4] }}</td> <!-- GoalProtein -->
+                        <td>{{ row[5] }}</td> <!-- GoalStarch -->
+                        <td>{{ row[6] }}</td> <!-- ActualFat -->
+                        <td>{{ row[7] }}</td> <!-- ActualProtein -->
+                        <td>{{ row[8] }}</td> <!-- ActualStarch -->
+                        <td>{{ row[9] }}</td> <!-- ExpectedCalories -->
+                        <td>{{ row[10] }}</td><!-- ActualCalories -->
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+
+        <!-- 3) Group Goal -->
+        <div class="section">
+            <h2>Group Goal</h2>
+            <form method="POST" action="{{ url_for('goal.goal_home', user_id=user_id) }}">
+                <input type="hidden" name="action" value="group_goal">
+                <button type="submit" class="view-btn">View</button>
+            </form>
+
+            <!-- 如果查到 group_goals_data，就用表格顯示 -->
+            {% if group_goals_data %}
+                <table>
+                    <tr>
+                        <th>UserID</th>
+                        <th>UserName</th>
+                        <th>Gender</th>
+                        <th>Age</th>
+                        <th>Height</th>
+                        <th>Weight</th>
+                        <th>Goal Fat</th>
+                        <th>Goal Protein</th>
+                        <th>Goal Starch</th>
+                        <th>Goal Start Date</th>
+                        <th>Goal End Date</th>
+                    </tr>
+                    {% for row in group_goals_data %}
+                    <tr>
+                        <td>{{ row[0] }}</td> <!-- U.ID -->
+                        <td>{{ row[1] }}</td> <!-- U.UName -->
+                        <td>{{ row[2] }}</td> <!-- U.GENDER -->
+                        <td>{{ row[3] }}</td> <!-- U.AGE -->
+                        <td>{{ row[4] }}</td> <!-- U.HEIGHT -->
+                        <td>{{ row[5] }}</td> <!-- U.WEIGHT -->
+                        <td>{{ row[6] }}</td> <!-- UG.Fat -->
+                        <td>{{ row[7] }}</td> <!-- UG.Protein -->
+                        <td>{{ row[8] }}</td> <!-- UG.Starch -->
+                        <td>{{ row[9] }}</td> <!-- UG.S_DATE -->
+                        <td>{{ row[10] }}</td><!-- UG.E_DATE -->
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- 返回 Profile -->
+    <div class="back-link">
+        <p><a href="{{ url_for('user.profile', user_id=user_id) }}">Back to Profile</a></p>
+    </div>
+</body>
+</html>

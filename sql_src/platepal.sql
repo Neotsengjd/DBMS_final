@@ -26,14 +26,14 @@ DROP TABLE IF EXISTS `FOOD`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `FOOD` (
-  `FoodID` int NOT NULL,
+  `FoodID` int NOT NULL AUTO_INCREMENT,
   `Fat` float DEFAULT NULL,
   `Protein` float DEFAULT NULL,
   `Starch` float DEFAULT NULL,
   `Calories` float DEFAULT NULL,
   `FName` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`FoodID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,7 +60,7 @@ CREATE TABLE `GROUP_LEADER` (
   PRIMARY KEY (`GroupID`),
   KEY `Leader` (`Leader`),
   CONSTRAINT `group_leader_ibfk_1` FOREIGN KEY (`Leader`) REFERENCES `USERS` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +175,7 @@ CREATE TABLE `USER_GOAL` (
   PRIMARY KEY (`U_GoalID`),
   KEY `UID` (`UID`),
   CONSTRAINT `user_goal_ibfk_1` FOREIGN KEY (`UID`) REFERENCES `USERS` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,9 +204,9 @@ CREATE TABLE `USERS` (
   `Weight` float DEFAULT NULL,
   `Account` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `Password` int DEFAULT NULL,
-  `Activity` int DEFAULT NULL,
+  `Activity_level` int DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
