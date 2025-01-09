@@ -82,7 +82,7 @@ def profile(user_id):
         cursor.close()
         if not user_data:
             abort(404, "User not found.")
-        return render_template('profile.html', user_data=user_data, user_id=user_id)
+        return render_template('user_home.html', user_data=user_data, user_id=user_id)
     except Exception as e:
         print(e)
         abort(500, "An error occurred while fetching user data.")

@@ -85,7 +85,7 @@ CREATE TABLE `GROUP_MEMBER` (
   `Members` int NOT NULL,
   PRIMARY KEY (`M_GroupID`,`Members`),
   KEY `Members` (`Members`),
-  CONSTRAINT `group_member_ibfk_1` FOREIGN KEY (`M_GroupID`) REFERENCES `GROUP_LEADER` (`GroupID`),
+  CONSTRAINT `group_member_ibfk_1` FOREIGN KEY (`M_GroupID`) REFERENCES `GROUP_LEADER` (`GroupID`) ON DELETE CASCADE,
   CONSTRAINT `group_member_ibfk_2` FOREIGN KEY (`Members`) REFERENCES `USERS` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

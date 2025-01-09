@@ -66,7 +66,6 @@ def goal_home(user_id):
         # -----------------------------
         elif action == "my_goal":
             try:
-                # 根據您提供的查詢邏輯
                 sql_my_goal = """
                     SELECT
                         UG.S_DATE AS StartDate,
@@ -116,7 +115,6 @@ def goal_home(user_id):
         # (3) Group Goal
         # -----------------------------
         elif action == "group_goal":
-            # 使用新版本的 Group Goal SQL，顯示同群組所有成員及其目標
             sql_group_goal = """
                 SELECT 
                     U.ID,
@@ -147,11 +145,10 @@ def goal_home(user_id):
                         WHERE Leader = %s
                     )
                     UNION
-                    -- 取出「領導」
+ 
                     SELECT GL.Leader
                     FROM GROUP_LEADER GL
                     WHERE GL.GroupID IN (
-                        -- 找出當前使用者所屬之所有群組ID
                         SELECT M_GroupID
                         FROM GROUP_MEMBER
                         WHERE Members = %s
