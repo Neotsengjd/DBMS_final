@@ -15,8 +15,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: auto;
-            padding-bottom: 50px;
+            height: 100vh;
         }
         .meal-info-card {
             background-color: white;
@@ -24,8 +23,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
-            width: 800px;
-            margin-bottom: 20px;
+            width: 400px;
         }
         h1 {
             color: #333;
@@ -73,39 +71,23 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>Meal Category</th>
-                    <th>Food Name</th>
-                    <th>Fat</th>
-                    <th>Protein</th>
-                    <th>Starch</th>
-                    <th>Calories</th>
-                    <th>Count</th>
                 </tr>
             </thead>
             <tbody>
-                {% for meal in meals.values() %}
-                    {% for food in meal.Foods %}
-                    <tr>
-                        {% if loop.first %} {# 只在第一個食物行顯示 Meal 資訊 #}
-                        <td rowspan="{{ meal.Foods|length }}">{{ meal.Date }}</td>
-                        <td rowspan="{{ meal.Foods|length }}">{{ meal.Time }}</td>
-                        <td rowspan="{{ meal.Foods|length }}">{{ meal.MealCategory }}</td>
-                        {% endif %}
-                        <td>{{ food.Name }}</td>
-                        <td>{{ food.Fat }}</td>
-                        <td>{{ food.Protein }}</td>
-                        <td>{{ food.Starch }}</td>
-                        <td>{{ food.Calories }}</td>
-                        <td>{{ food.Count }}</td>
-                    </tr>
-                    {% endfor %}
+                {% for meal in meals %}
+                <tr>
+                    <td>{{ meal.Date }}</td>
+                    <td>{{ meal.Time }}</td>
+                    <td>{{ meal.MealCategory }}</td>
+                </tr>
                 {% endfor %}
             </tbody>
-        </table>        
+        </table>
         {% else %}
-        <p>No meals found for the past 100 days.</p>
+        <p>No meals found for the past 7 days.</p>
         {% endif %}
         <a href="{{ url_for('user.profile', user_id=user_id) }}">Back to Profile</a>
-        <a href="{{ url_for('meal.add_meal', user_id=user_id) }}">Add Meal</a>
+        <a href="{{ url_for('meal.add_meal', user_id=user_id) }}" class="button">Add Meal</a>
     </div>
 </body>
 </html>
