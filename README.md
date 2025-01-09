@@ -6,7 +6,7 @@ This project ...
 
 Key Features:
 
-1:Book Collection Management: Add, update, and delete books from your personal collection. The system allows detailed information for each book, including title, author, publication year, and genre.
+1: Management: Add, update, and delete books from your personal collection. The system allows detailed information for each book, including title, author, publication year, and genre.
 
 2:Reading History: Track the books you have read, along with dates and personal notes. This feature helps users maintain a log of their reading journey.
 
@@ -20,64 +20,70 @@ Key Features:
 
 The database contains the following tables:
 
-### Book
+### FOOD
 
-- **`id`**: Integer, Primary Key
-- **`ISBN`**: Integer
-- **`book_title`**: Text, Not Null
-- **`author_id`**: Number
-- **`author`**: Text
-- **`price`**: Integer, Check (price >= 0)
-- **`category`**: Text
-- **`edition`**: Integer, Check (edition > 0)
-- **`current_page`**: Integer, Check (current_page >= 0)
-- **`pdf_path`**: Text
+- **`FoodID`**: Integer, Primary Key
+- **`Fat`**: float
+- **`Protein`**: float
+- **`Starch`**: float
+- **`Calories`**: float
+- **`FName`**: Text
 
-### ReadingHistory
+### USERS
 
-- **`id`**: Integer, Primary Key
-- **`time_stamp`**: Text
-- **`book_id`**: Integer, Foreign Key (references Book(id)), Not Null
-- **`bookpage`**: Integer, Check (bookpage >= 0)
-- **`note`**: Text, Not Null
+- **`ID`**: Integer, Not Null, Primary Key
+- **`UName`**: Text, Not Null
+- **`Gender`**: Text(M, F)
+- **`Age`**: Integer, Check (Age >= 0)
+- **`Height`**: float
+- **`Weight`**: float
+- **`Account`**: Text
+- **`Password`**: int
+- **`Activity_level`**: int
 
-### ReadingPlan
 
-- **`id`**: Integer, Primary Key
-- **`book_id`**: Integer, Foreign Key (references Book(id)), Not Null
-- **`expired_date`**: Text
-- **`is_complete`**: Integer, Check (is_complete IN (0, 1))
+### USER_GOAL
 
-### Note
+- **`U_GoalID`**: Integer, Primary Key
+- **`UID`**: Integer, Foreign Key (references USERS(ID)), Not Null
+- **`Fat`**: float
+- **`Protein`**: float
+- **`Starch`**: float
+- **`S_DATE`**: date
+- **`E_DATE`**: date
 
-- **`id`**: Integer, Primary Key
-- **`book_id`**: Integer, Foreign Key (references Book(id)), Not Null
-- **`title`**: Text
-- **`content`**: Text
-- **`created_at`**: Text
-- **`updated_at`**: Text
+### MEAL 
 
-### FavoriteList
+- **`MealID`**: Integer, Primary Key
+- **`UID`**: Integer, Primary Key, Foreign Key (references USERS(ID))
+- **`Dates`**: date
+- **`Times`**: Time
+- **`Category`**: Text
 
-- **`id`**: Integer, Primary Key
-- **`book_id`**: Integer, Foreign Key (references Book(id)), Not Null
-- **`book_title`**: Text
+### MEAL_FOOD
 
-### Author (New Table)
+- **`FoodID`**: Integer, Primary Key, Foreign Key (references FOOD (FoodID))
+- **`MealID`**: Integer, Primary Key, Foreign Key (references MEAL (UID, MealID))
+- **`UID`**: Integer, Primary Key, Foreign Key (references MEAL (UID, MealID))
+- **`Count`**: Integer
 
-- **`author_id`**: Integer, Primary Key
-- **`author_name`**: Text, Not Null
-- **`introduction`**: Text
-- **`nationality`**: Text
-- **`Birth_year`**: Integer, Check (Birth_year > 0)
+### GROUP_LEADER
+
+- **`GroupID`**: Integer, Primary Key
+- **`Leader`**: Integer, Primary Key, Foreign Key (references USERS(ID))
+- **`GName`**: Text
+
+### GROUP_MEMBER
+
+- **`M_GroupID`**: Integer, Primary Key, Foreign Key (references GROUP_LEADER(Group_ID))
+- **`Members`**: Integer, Primary Key, Foreign Key (references USERS(ID))
 
 
 # **Backend Features**
 
-### **Book Management**
+### **Management**
 
-- **Check Book**: Check if a book with the same title already exists.
-- **Add Book**: Add a new book to the library. If a book with the same title exists, the user will be prompted to confirm adding a duplicate.
-- **Upload PDF**: Upload a PDF file associated with a book. The file path is stored in the pdf_path column. 
-- **View PDF**: View the uploaded PDF file of a book. 
-- **Add Author**: Add a new author information.
+- **Check User's Information**: Check if a user already exists or update it.
+- **Add Meal**: Add a new meal to the databases.
+- **Join Group**: Join a new group to cheeck the member. 
+- **Set goal**: Someone can set their goal and check the goal in joined groups.
