@@ -34,7 +34,7 @@
             text-align: center;
         }
 
-        /* 提示訊息 */
+        /* Flash Messages */
         .flash-messages {
             width: 100%;
             max-width: 600px;
@@ -160,17 +160,6 @@
     <h1>ADD</h1>
     <h2>Add Meal & Food</h2>
 
-    <!-- Flash Messages -->
-    <div class="flash-messages">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="flash flash-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
-
     <!-- 所有區塊 (Meal + Food) -->
     <div class="sections-container">
         <!-- 1️⃣ 新增餐點 -->
@@ -183,8 +172,8 @@
                 <input type="date" id="meal_date" name="meal_date" required>
 
                 <label for="meal_time">Meal Time:</label>
-                <input type="time" id="meal_time" name="meal_time" required onblur="formatTimeInput()"><br>
-                
+                <input type="time" id="meal_time" name="meal_time" required>
+
                 <label for="meal_category">Meal Category:</label>
                 <select id="meal_category" name="meal_category">
                     <option value="Breakfast">Breakfast</option>
@@ -192,8 +181,12 @@
                     <option value="Dinner">Dinner</option>
                 </select>
 
-                <label for="food_name">Food Name:</label>
-                <input type="text" id="food_name" name="food_name" placeholder="Enter food name" required>
+                <label for="food_id">Food Name:</label>
+                <select id="food_id" name="food_id">
+                    {% for food in food_options %}
+                    <option value="{{ food[0] }}">{{ food[1] }}</option>
+                    {% endfor %}
+                </select>
 
                 <label for="food_count">Count:</label>
                 <input type="number" id="food_count" name="food_count" min="1" value="1" required>

@@ -9,12 +9,18 @@ meal = Blueprint("meal", __name__)
 
 @meal.route('/add_meal/<int:user_id>', methods=['GET', 'POST'])
 def add_meal(user_id):
+    
+    
     cursor = db.connection.cursor()
-
+    cursor.execute("SELECT FoodID, FName FROM FOOD;")
+    food_options = cursor.fetchall()  # 取得所有食物的 ID & 名稱
+    print("🔹 food_options (直接查詢結果):", food_options)  # 印出 SQL 結果
+    
+    
     if request.method == 'POST':
         action = request.form.get("action")
 
-        # **(A) 新增餐點**
+    #   **(A) 新增餐點**
         if action == "add_meal":
             try:
                 meal_date = request.form['meal_date']
@@ -25,7 +31,7 @@ def add_meal(user_id):
 
                 # **確保輸入完整**
                 if not (meal_date and meal_category and food_name and food_count > 0):
-                    #flash("請輸入完整的餐點資訊！", "warning")
+                    flash("請輸入完整的餐點資訊！", "warning")
                     return redirect(url_for('meal.add_meal', user_id=user_id))
 
                 # **(1) 獲取新的 MealID**
@@ -61,7 +67,7 @@ def add_meal(user_id):
                 )
 
                 db.connection.commit()
-                #flash("Meal & Food added successfully!", "success")
+                flash("Meal & Food added successfully!", "success")
                 return redirect(url_for('meal.query', user_id=user_id))
 
             except Exception as e:
@@ -107,8 +113,8 @@ def add_meal(user_id):
                 db.connection.rollback()
                 abort(500, f"❌ Error: {e}")
 
-    return render_template('add_meal.html', user_id=user_id)
-
+    
+    return render_template('add_meal.html', user_id=user_id, food_options=food_options)
 
 
 @meal.route('/query/<int:user_id>', methods=['GET'])
@@ -156,8 +162,6 @@ def query(user_id):
                 })
 
         cursor.close()
-        #print("🔹 Query Result:", result)  
-        #print("🔹 Processed Meals:", meals) 
         return render_template('meal_info.html', user_id=user_id, meals=meals)
 
 
