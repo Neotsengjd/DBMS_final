@@ -259,12 +259,22 @@
 
         <!-- 4) Delete Group (新增) -->
         <div class="section">
-            <h2>Delete Group</h2>
+            <h2>Delete Group(Leader)</h2>
             <form method="POST" action="{{ url_for('group.group_home', user_id=user_id) }}">
                 <input type="hidden" name="action" value="delete_group">
                 <label for="delete_group_name">GroupName:</label>
                 <input type="text" name="group_name" id="delete_group_name" required>
                 <button type="submit">Delete Group</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>Exit Group(Member)</h2>
+            <form method="POST" action="{{ url_for('group.group_home', user_id=user_id) }}">
+                <input type="hidden" name="action" value="exit_group">
+                <label for="exit_group_name">GroupName:</label>
+                <input type="text" name="group_name" id="exit_group_name" required>
+                <button type="submit">Exit Group</button>
             </form>
         </div>
     </div>

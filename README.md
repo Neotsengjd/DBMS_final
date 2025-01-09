@@ -1,4 +1,4 @@
-# DBMS Final-Book Management System
+# DBMS Final:　Meal Management System
 
 # 專案說明
 

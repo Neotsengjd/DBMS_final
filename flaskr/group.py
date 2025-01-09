@@ -127,6 +127,27 @@ def group_home(user_id):
                 print(f"Error fetching my groups: {e}")
                 db.connection.rollback()
                 abort(500, "Error fetching my group data.")
+        # ---------------------------
+        # 5) 加入 "Exit Group"
+        # ---------------------------
+        elif action == "exit_group":    
+            group_name = request.form.get("group_name")     
+            try:
+                exit_query = """
+                    DELETE gm
+                    FROM `GROUP_MEMBER` gm
+                    INNER JOIN `GROUP_LEADER` gl ON gm.M_GroupID = gl.GroupID
+                    WHERE gm.Members = %s
+                    AND gl.GName= %s;
+
+                """
+                cursor.execute(exit_query, (user_id,group_name))
+                db.connection.commit()
+                
+            except Exception as e:
+                print(f"Error fetching my groups: {e}")
+                db.connection.rollback()
+                abort(500, "Error fetching my group data.")
     cursor.close()
     # 回到 group.html，並把 my_groups, all_groups 帶進模板
     return render_template(
